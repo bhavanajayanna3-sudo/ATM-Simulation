@@ -354,9 +354,10 @@ public class ATMSimulation {
                 statement.close();
                 connection.close();
 
-            } catch (Exception error) {
-                message = "Unable to get transaction details!";
-            }
+            } } catch (Exception error) {
+    error.printStackTrace();
+    message = "Database Error: " + error.getMessage();
+}
 
             exchange.getResponseHeaders().set(
                 "Access-Control-Allow-Origin", "*"
