@@ -303,9 +303,10 @@ public class ATMSimulation {
                     connection.close();
                 }
 
-            } catch (Exception error) {
-                message = "Withdrawal Error!";
-            }
+            } } catch (Exception error) {
+    error.printStackTrace();
+    message = "Database Error: " + error.getMessage();
+}
 
             byte[] response = message.getBytes();
 
