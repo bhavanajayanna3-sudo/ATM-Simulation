@@ -5,7 +5,7 @@ function checkBalance() {
 
     let account = sessionStorage.getItem("accountNumber");
 
-    fetch("http://localhost:8080/balance?account=" + account)
+    fetch("https://atm-simulation-47hn.onrender.com/balance?account=" + account))
 
     .then(response => response.text())
 
@@ -66,7 +66,7 @@ function withdrawMoney() {
     details.append("account", account);
     details.append("amount", amount);
 
-    fetch("http://localhost:8080/withdraw", {
+    fetch("https://atm-simulation-47hn.onrender.com/withdraw", {
         method: "POST",
         body: details
     })
@@ -86,7 +86,7 @@ function miniStatement() {
 
     let account = sessionStorage.getItem("accountNumber");
 
-    fetch("http://localhost:8080/statement?account=" + account)
+    fetch("https://atm-simulation-47hn.onrender.com/statement?account=" + account)
 
     .then(response => response.text())
 
