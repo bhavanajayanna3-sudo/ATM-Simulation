@@ -34,7 +34,7 @@ function depositMoney() {
     details.append("account", account);
     details.append("amount", amount);
 
-    fetch("http://localhost:8080/deposit", {
+    fetch("https://atm-simulation-47hn.onrender.com/deposit", {
         method: "POST",
         body: details
     })
