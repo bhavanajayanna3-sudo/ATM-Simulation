@@ -10,7 +10,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
     loginDetails.append("account", account);
     loginDetails.append("pin", pin);
 
-    fetch(https://atm-simulation-47hn.onrender.com, {
+    fetch("https://atm-simulation-47hn.onrender.com/login", { 
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
