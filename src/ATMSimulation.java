@@ -220,9 +220,10 @@ public class ATMSimulation {
                     connection.close();
                 }
 
-            } catch (Exception error) {
-                message = "Deposit Error!";
-            }
+            } } catch (Exception error) {
+    error.printStackTrace();
+    message = "Deposit Error: " + error.getMessage();
+}
 
             byte[] response = message.getBytes();
 
