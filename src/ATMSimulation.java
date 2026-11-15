@@ -318,67 +318,63 @@ public class ATMSimulation {
         });
 
         // Mini Statement
-        server.createContext("/statement", exchange -> {
+server.createContext("/statement", exchange -> {
 
-            String query = exchange.getRequestURI().getQuery();
-            String account = query.split("=")[1];
+    String query = exchange.getRequestURI().getQuery();
+    String account = query.split("=")[1];
 
-            String message = "";
+    String message = "";
 
-            try {
-                Connection connection = connect();
+    try {
+        Connection connection = connect();
 
-                String sql =
-                    "SELECT transaction_type, amount, transaction_date FROM transactions WHERE account_number=? ORDER BY transaction_date DESC LIMIT 5";
+        String sql = "SELECT transaction_type, amount, transaction_date FROM transactions WHERE account_number=? ORDER BY transaction_date DESC LIMIT 5";
 
-                PreparedStatement statement =
-                    connection.prepareStatement(sql);
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, account);
 
-                statement.setString(1, account);
+        ResultSet result = statement.executeQuery();
 
-                ResultSet result = statement.executeQuery();
+        while (result.next()) {
+            message += result.getString("transaction_type")
+                + " - Rs. "
+                + result.getDouble("amount")
+                + " - "
+                + result.getTimestamp("transaction_date")
+                + "\n";
+        }
 
-                while (result.next()) {
-                    message += result.getString("transaction_type")
-                        + " - Rs. "
-                        + result.getDouble("amount")
-                        + " - "
-                        + result.getTimestamp("transaction_date")
-                        + "\n";
-                }
+        if (message.equals("")) {
+            message = "No transactions found!";
+        }
 
-                if (message.equals("")) {
-                    message = "No transactions found!";
-                }
+        result.close();
+        statement.close();
+        connection.close();
 
-                result.close();
-                statement.close();
-                connection.close();
-
-            } } catch (Exception error) {
-    error.printStackTrace();
-    message = "Database Error: " + error.getMessage();
-}
-
-            exchange.getResponseHeaders().set(
-                "Access-Control-Allow-Origin", "*"
-            );
-
-            byte[] response = message.getBytes();
-
-            exchange.sendResponseHeaders(200, response.length);
-
-            OutputStream output = exchange.getResponseBody();
-            output.write(response);
-            output.close();
-        });
-
-        server.start();
-
-        System.out.println("ATM Server Started!");
-        System.out.println("Server running at port " + port);
+    } catch (Exception error) {
+        error.printStackTrace();
+        message = "Database Error: " + error.getMessage();
     }
 
+    exchange.getResponseHeaders().set(
+        "Access-Control-Allow-Origin", "*"
+    );
+
+    byte[] response = message.getBytes();
+
+    exchange.sendResponseHeaders(200, response.length);
+
+    OutputStream output = exchange.getResponseBody();
+    output.write(response);
+    output.close();
+});
+
+server.start();
+
+System.out.println("ATM Server Started!");
+System.out.println("Server running at port " + port);
+}
     // Database Connection
     static Connection connect() throws SQLException {
 
