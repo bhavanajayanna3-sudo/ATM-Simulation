@@ -9,9 +9,9 @@ public class ATMSimulation {
     static Scanner scanner = new Scanner(System.in);
 
     static String accountNumber;
-    static String databaseURL = "jdbc:mysql://localhost:3306/atm_database";
-    static String databaseUser = System.getenv("DB_USER");
-    static String databasePassword = System.getenv("DB_PASSWORD");
+    static String databaseURL = System.getenv("DB_URL");
+static String databaseUser = System.getenv("DB_USER");
+static String databasePassword = System.getenv("DB_PASSWORD");
 
 public static void main(String[] args) throws IOException {
 
