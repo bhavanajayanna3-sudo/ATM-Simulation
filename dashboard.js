@@ -1,11 +1,13 @@
 if (sessionStorage.getItem("accountNumber") === null) {
     window.location.href = "index.html";
 }
+
+// Check Balance
 function checkBalance() {
 
     let account = sessionStorage.getItem("accountNumber");
 
-    fetch("https://atm-simulation-47hn.onrender.com/balance?account=" + account))
+    fetch("https://atm-simulation-47hn.onrender.com/balance?account=" + account)
 
     .then(response => response.text())
 
@@ -14,14 +16,14 @@ function checkBalance() {
     })
 
     .catch(error => {
-        document.getElementById("message").innerText =
-            "Unable to connect to Java!";
+        document.getElementById("message").innerText = "Unable to connect to Java!";
     });
 }
+
+// Deposit Money
 function depositMoney() {
 
     let account = sessionStorage.getItem("accountNumber");
-
     let amount = prompt("Enter amount to deposit:");
 
     if (amount === null || amount === "" || isNaN(amount) || Number(amount) <= 0) {
@@ -30,7 +32,6 @@ function depositMoney() {
     }
 
     let details = new URLSearchParams();
-
     details.append("account", account);
     details.append("amount", amount);
 
@@ -46,14 +47,14 @@ function depositMoney() {
     })
 
     .catch(error => {
-        document.getElementById("message").innerText =
-            "Deposit failed!";
+        document.getElementById("message").innerText = "Deposit failed!";
     });
 }
+
+// Withdraw Money
 function withdrawMoney() {
 
     let account = sessionStorage.getItem("accountNumber");
-
     let amount = prompt("Enter amount to withdraw:");
 
     if (amount === null || amount === "" || isNaN(amount) || Number(amount) <= 0) {
@@ -62,7 +63,6 @@ function withdrawMoney() {
     }
 
     let details = new URLSearchParams();
-
     details.append("account", account);
     details.append("amount", amount);
 
@@ -78,10 +78,11 @@ function withdrawMoney() {
     })
 
     .catch(error => {
-        document.getElementById("message").innerText =
-            "Withdrawal failed!";
+        document.getElementById("message").innerText = "Withdrawal failed!";
     });
 }
+
+// Mini Statement
 function miniStatement() {
 
     let account = sessionStorage.getItem("accountNumber");
@@ -95,11 +96,13 @@ function miniStatement() {
     })
 
     .catch(error => {
-        document.getElementById("message").innerText =
-            "Unable to connect to Java!";
+        document.getElementById("message").innerText = "Unable to connect to Java!";
     });
 }
+
+// Logout
 function logout() {
+
     sessionStorage.removeItem("accountNumber");
     window.location.href = "index.html";
 }
